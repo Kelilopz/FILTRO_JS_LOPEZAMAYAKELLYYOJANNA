@@ -1,17 +1,19 @@
-import { LitElement, css, html } from 'lit'
+import { LitElement, css, html } from 'lit';
+import {
+  getAllFilmforYearly
+} from './assets/modules/funciones.js';
 
 export class MyElement extends LitElement {
   static get properties() {
     return {
-      
     }
   }
+
 
   constructor() {
     super()
     
   }
-
   render() {
     return html`
     <body>
@@ -45,11 +47,7 @@ export class MyElement extends LitElement {
         </li>
       </ul>
     </section>
-    <!-- SIDEBAR -->
-  
-    <!-- NAVBAR -->
     <section id="content">
-      <!-- NAVBAR -->
       <nav>
         <i class='bx bx-menu toggle-sidebar' ></i>
         <form action="#">
@@ -66,9 +64,6 @@ export class MyElement extends LitElement {
           </ul>
         </div>
       </nav>
-      <!-- NAVBAR -->
-  
-      <!-- MAIN -->
       <main>
         <h1 class="title">Dashboard</h1>
         <ul class="breadcrumbs">
@@ -127,8 +122,7 @@ export class MyElement extends LitElement {
             <div class="head">
               <h3>Sales Report</h3>
             </div>
-            <!-- conteido -->
-            <h1>Hola Mundo</h1>
+            <h1></h1>
           </div>
         
         </div>
@@ -139,10 +133,12 @@ export class MyElement extends LitElement {
   </body>
     `
   }
+  getAllFilmforYearly = () =>{
+    let res = fetch('https://search.imdbot.workers.dev/?q=Niram')
+    let data = res.json()
+    console.log(data)
 
-  _onClick() {
-    this.count++
-  }
+}
 
   static get styles() {
     return css`
@@ -703,6 +699,8 @@ main .btn-send:hover {
 }
     `
   }
+
+  
 }
 
 window.customElements.define('my-element', MyElement)
