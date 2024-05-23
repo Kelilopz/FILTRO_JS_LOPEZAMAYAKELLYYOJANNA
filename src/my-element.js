@@ -1,148 +1,126 @@
-import { LitElement, css, html } from 'lit';
-import {
-  getAllFilmforYearly
-} from './assets/modules/funciones.js';
+import { LitElement, css, html } from 'lit'
+import { 
+  getFilm,
+  getFilmByYear
+} from './modules/funciones.js'
+
 
 export class MyElement extends LitElement {
-  static get properties() {
-    return {
-    }
-  }
-
+  static properties ={
+    selectedCategoria: {type: Number}
+  };
 
   constructor() {
     super()
-    
-  }
+    this.selectedCategoria = 0;
+  };
+
   render() {
     return html`
-    <body>
+  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="style.css">
     <!-- SIDEBAR -->
-    <section id="sidebar">
-      <a href="#" class="brand"><i class='bx bxs-smile icon'></i> AdminSite</a>
-      <ul class="side-menu">
-        <li><a href="#" class="active"><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
-        <li class="divider" data-text="main">Main</li>
-        <li>
-          <a href="#"><i class='bx bxs-inbox icon' ></i> Elements <i class='bx bx-chevron-right icon-right' ></i></a>
-          <ul class="side-dropdown">
-            <li><a href="#">Alert</a></li>
-            <li><a href="#">Badges</a></li>
-            <li><a href="#">Breadcrumbs</a></li>
-            <li><a href="#">Button</a></li>
-          </ul>
-        </li>
-        <li><a href="#"><i class='bx bxs-chart icon' ></i> Charts</a></li>
-        <li><a href="#"><i class='bx bxs-widget icon' ></i> Widgets</a></li>
-        <li class="divider" data-text="table and forms">Table and forms</li>
-        <li><a href="#"><i class='bx bx-table icon' ></i> Tables</a></li>
-        <li>
-          <a href="#"><i class='bx bxs-notepad icon' ></i> Forms <i class='bx bx-chevron-right icon-right' ></i></a>
-          <ul class="side-dropdown">
-            <li><a href="#">Basic</a></li>
-            <li><a href="#">Select</a></li>
-            <li><a href="#">Checkbox</a></li>
-            <li><a href="#">Radio</a></li>
-          </ul>
-        </li>
+	<section id="sidebar">
+  <a href="#" class="brand"><i class='bx bxs-smile icon'></i> ALLMovies</a>
+  <ul class="side-menu">
+    <li><a href="#" class="active"><i class='bx bxs-dashboard icon' ></i> Films</a></li>
+    <li class="divider" data-text="main">Main</li>
+    <li>
+      <a @click="${()=> this.changeCategory(1)}" ><i class='bx bxs-inbox icon' ></i> By Year <i class='bx bx-chevron-right icon-right' ></i></a>
+    </li>
+    <li>
+    <a @click="${()=> this.changeCategory(2)}" ><i class='bx bxs-chart icon' ></i>Byactor</a>
+    </li>
+    <li>
+    <a @click="${()=> this.changeCategory(3)}"><i class='bx bxs-widget icon' ></i> Ranking</a>
+    </li>
+    <li>
+    <a @click="${()=> this.changeCategory(4)}"><i class='bx bxs-widget icon' ></i>Pelis</a>
+    </li>
+    <li>
+    <a @click="${()=> this.changeCategory(5)}"><i class='bx bxs-widget icon' ></i> Titles</a>
+    </li>
+    <li>
+    <a @click="${()=> this.changeCategory(6)}"><i class='bx bxs-widget icon' ></i> identificadores y títulos</a>
+    </li>
+    <li>
+    <a @click="${()=> this.changeCategory(7)}"><i class='bx bxs-widget icon' ></i>Películas y programas de TV</a>
+    </li>
+    <li>
+    <a @click="${()=> this.changeCategory(8)}"><i class='bx bxs-widget icon' ></i>Mucha info</a>
+    </li>
+  </ul>
+</section>
+<!-- SIDEBAR -->
+
+<!-- NAVBAR -->
+<section id="content">
+  <!-- NAVBAR -->
+  <nav>
+    <i class='bx bx-menu toggle-sidebar' ></i>
+    <form action="#">
+      
+    </form>
+    
+    <span class="divider"></span>
+    <div class="profile">
+      <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
+      <ul class="profile-link">
+        <li><a href="#"><i class='bx bxs-user-circle icon' ></i> Profile</a></li>
+        <li><a href="#"><i class='bx bxs-cog' ></i> Settings</a></li>
+        <li><a href="#"><i class='bx bxs-log-out-circle' ></i> Logout</a></li>
       </ul>
-    </section>
-    <section id="content">
-      <nav>
-        <i class='bx bx-menu toggle-sidebar' ></i>
-        <form action="#">
-          
-        </form>
-        
-        <span class="divider"></span>
-        <div class="profile">
-          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
-          <ul class="profile-link">
-            <li><a href="#"><i class='bx bxs-user-circle icon' ></i> Profile</a></li>
-            <li><a href="#"><i class='bx bxs-cog' ></i> Settings</a></li>
-            <li><a href="#"><i class='bx bxs-log-out-circle' ></i> Logout</a></li>
-          </ul>
-        </div>
-      </nav>
-      <main>
-        <h1 class="title">Dashboard</h1>
-        <ul class="breadcrumbs">
-          <li><a href="#">Home</a></li>
-          <li class="divider">/</li>
-          <li><a href="#" class="active">Dashboard</a></li>
-        </ul>
-        <div class="info-data">
-          <div class="card">
-            <div class="head">
-              <div>
-                <h2>1500</h2>
-                <p>Traffic</p>
-              </div>
-              <i class='bx bx-trending-up icon' ></i>
-            </div>
-            <span class="progress" data-value="40%"></span>
-            <span class="label">40%</span>
-          </div>
-          <div class="card">
-            <div class="head">
-              <div>
-                <h2>234</h2>
-                <p>Sales</p>
-              </div>
-              <i class='bx bx-trending-down icon down' ></i>
-            </div>
-            <span class="progress" data-value="60%"></span>
-            <span class="label">60%</span>
-          </div>
-          <div class="card">
-            <div class="head">
-              <div>
-                <h2>465</h2>
-                <p>Pageviews</p>
-              </div>
-              <i class='bx bx-trending-up icon' ></i>
-            </div>
-            <span class="progress" data-value="30%"></span>
-            <span class="label">30%</span>
-          </div>
-          <div class="card">
-            <div class="head">
-              <div>
-                <h2>235</h2>
-                <p>Visitors</p>
-              </div>
-              <i class='bx bx-trending-up icon' ></i>
-            </div>
-            <span class="progress" data-value="80%"></span>
-            <span class="label">80%</span>
-          </div>
-        </div>
-        <div class="data">
-          <div class="content-data">
-            <div class="head">
-              <h3>Sales Report</h3>
-            </div>
-            <h1></h1>
-          </div>
-        
-        </div>
-      </main>
-      <!-- MAIN -->
-    </section>
-    <!-- NAVBAR -->
-  </body>
+    </div>
+  </nav>
+  <!-- NAVBAR -->
+
+  <!-- MAIN -->
+  <main>
+    <h1 class="title">Dashboard</h1>
+    <ul class="breadcrumbs">
+      <li><a href="#">Home</a></li>
+      <li class="divider">/</li>
+      <li><a href="#" class="active">Dashboard</a></li>
+    </ul>
+    </div>
+    <my-pelicula .category=${this.selectedCategoria}></my-pelicula>
+  </main>
+  <!-- MAIN -->
+</section>
+<!-- NAVBAR -->
     `
   }
-  getAllFilmforYearly = () =>{
-    let res = fetch('https://search.imdbot.workers.dev/?q=Niram')
-    let data = res.json()
-    console.log(data)
 
-}
+  changeCategory(category) {
+    this.selectedCategoria = category;
+    console.log(this.selectedCategoria);
+  }
+
 
   static get styles() {
     return css`
-     
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+
+* {
+	font-family: 'Open Sans', sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+:root {
+	--grey: #F1F0F6;
+	--dark-grey: #8D8D8D;
+	--light: #fff;
+	--dark: #000;
+	--green: #81D43A;
+	--light-green: #E3FFCB;
+	--blue: #1775F1;
+	--light-blue: #D0E4FF;
+	--dark-blue: #0C5FCD;
+	--red: #FC3B56;
+}
+
 html {
 	overflow-x: hidden;
 }
@@ -159,11 +137,9 @@ a {
 li {
 	list-style: none;
 }
-
-/* SIDEBAR */
 #sidebar {
 	position: fixed;
-	max-width: 260px;
+	max-width: 28vh;
 	width: 100%;
 	background: var(--light);
 	top: 0;
@@ -174,6 +150,7 @@ li {
 	transition: all .3s ease;
 	z-index: 200;
 	overflow: scroll;
+  overflow-x: scroll;
 }
 #sidebar.hide {
 	max-width: 60px;
@@ -310,6 +287,11 @@ li {
 	font-weight: 700;
 }
 /* SIDEBAR */
+
+
+
+
+
 /* CONTENT */
 #content {
 	position: relative;
@@ -434,8 +416,6 @@ nav .profile .profile-link a {
 nav .profile .profile-link a:hover {
 	background: var(--grey);
 }
-/* NAVBAR */
-/* MAIN */
 main {
 	width: 100%;
 	padding: 24px 20px 20px 20px;
@@ -686,6 +666,14 @@ main .btn-send {
 main .btn-send:hover {
 	background: var(--dark-blue);
 }
+/* MAIN */
+/* CONTENT */
+
+
+
+
+
+
 @media screen and (max-width: 768px) {
 	#content {
 		position: relative;
@@ -697,10 +685,88 @@ main .btn-send:hover {
 		display: none;
 	}
 }
+
     `
   }
 
-  
 }
+export class myPelicula extends LitElement {
+  static properties() {
+   pelicula: {type: Array}
+   nombrePelicula: {type: String}
+   year: {type: Number}
+   actores: {type: String}
+   rank : {type: String}
+   category : {type: Number}
+  }
 
-window.customElements.define('my-element', MyElement)
+  constructor() {
+    super()
+    this.nombrePelicula = '';
+    this.year = 0;
+    this.actores = '';
+    this.rank = 0;
+    this.category = 0;
+    this.pelicula = []
+  }
+  updated(changedProperties) {
+    if (changedProperties.has('category')) {
+      this.loadProducts();
+      console.log(this.category)
+    }
+  }
+  async loadProducts() {
+    switch (this.category) {
+      case 1:
+        this.pelicula = await getFilm('New');
+        break;
+      case 2:
+        this.pelicula = await getAllShirts();
+        break;
+      case 3:
+        this.pelicula = await getAllJeans();
+        break;
+      case 4:
+        this.pelicula = null; 
+        break;
+      case 5:
+          this.pelicula = await getAllJeans();
+        break;
+      case 6:
+        this.pelicula = await getAllJeans();
+        break;
+      case 7:
+        this.pelicula = await getAllJeans();
+        break;
+      case 8:
+        this.pelicula = await getAllJeans();
+        break;                                    
+      default:
+        this.pelicula = await getFilm('New');
+    }
+  }
+  render(){
+    html`
+    <div class="peliculaContainer">
+    ${Array.isArray(this.pelicula) && this.pelicula.length > 0 ?
+      this.pelicula.map(product => html`
+      <div class="pelicula">
+      <div class="imagenPelicula">
+        <img src="" alt="">
+      </div>
+      <div class="informacionPelicula"></div>
+      <h2>NombrePelicula</h2>
+      <h4>Año</h4>
+      <p>Actores</p>
+      <h2>Rank</h2>
+      </div>
+      </div>
+      `)
+      :html`<p>No pelicula found</p>`
+    }
+    `
+  }
+}
+customElements.define('my-pelicula', myPelicula)
+customElements.define('my-element', MyElement)
+
