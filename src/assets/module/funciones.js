@@ -2,21 +2,21 @@ import { LitElement, css, html } from 'lit'
 
 
 export const getFilm = async(code)=>{
-    try{
-    let options = {
+    let url = `https://search.imdbot.workers.dev/?q=${title}`
+    let option = {
         method: 'GET',
-            Headers: {
-                "content-type": "application/json"
-            }
+        Headers: {
+            "content-type": "application/json"
+          }
     }
-    let url = `https://search.imdbot.workers.dev/?q=${code}`
-    let res = await fetch(url, options);
-    let data = await res.json();
-    return data;
-    } catch (error) {
-      console.error('Ocurrió un error al obtener las peliculas:', error);
-    }
-  }
+
+    let res = await fetch(url, option)
+    let result = await res.json()
+    let films = [...result.description]
+    console.log(films)
+    return(films)
+}
+    
 
 export const getFilmByYear = async(code)=>{
     try{
@@ -59,19 +59,15 @@ export const getFilmByActor = async(code)=>{
 }
 
 export const getFilmByIMDb = async(code)=>{
-    try{
-    let options = {
-    method: 'GET',
-    Headers: {
-    "content-type": "application/json"
+    let url = `https://search.imdbot.workers.dev/?tt=${id}`
+    let option = {
+        method: 'GET',
+        Headers: {
+            "content-type": "application/json"
+          }
     }
-    }
-
-    let url = `https://search.imdbot.workers.dev/?tt=${code}`
-    let res = await fetch(url, options);
-    let data = await res.json();
-    let FilmNew = data['#RANK']
-    return FilmNew
-    } catch (error) {
-    console.error('Ocurrió un error al obtener las peliculas:', error);}
+    let responder = await fetch(url, option)
+    let result = await responder.json()
+    console.log(result)
+    return(result)
 }
